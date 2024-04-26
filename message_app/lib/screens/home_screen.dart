@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:message_app/screens/user_detail_user.dart';
+import 'package:message_app/screens/user_detail_screen.dart';
 import '../controller/user_controller.dart';
 import '../model/user.dart';
 
@@ -43,13 +43,13 @@ class _HomeScreen extends State<HomeScreen> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 TextField(
-                  decoration: const InputDecoration(labelText: 'Prénom'),
+                  decoration: const InputDecoration(labelText: 'First Name'),
                   onChanged: (value) {
                     firstName = value;
                   },
                 ),
                 TextField(
-                  decoration: const InputDecoration(labelText: 'Nom'),
+                  decoration: const InputDecoration(labelText: 'Last Name'),
                   onChanged: (value) {
                     lastName = value;
                   },
