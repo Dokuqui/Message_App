@@ -1,19 +1,20 @@
 class User {
-  String _nom;
-  String _prenom;
-  User(this._nom, this._prenom);
-  String get nom => _nom;
-  String get prenom => _prenom;
+  String _lastName;
+  String _firstName;
 
-  set nom(String value) {
+  User(this._lastName, this._firstName);
+  String get lastName => _lastName;
+  String get firstName => _firstName;
+
+  set lastName(String value) {
     if (value.isNotEmpty) {
-      _nom = value;
+      _lastName = value;
     }
   }
 
-  set prenom(String value) {
+  set firstName(String value) {
     if (value.isNotEmpty) {
-      _prenom = value;
+      _firstName = value;
     }
   }
 }

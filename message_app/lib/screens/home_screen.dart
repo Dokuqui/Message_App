@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:message_app/screens/user_detail_user.dart';
 import '../controller/user_controller.dart';
 import '../model/user.dart';
 
-
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
   @override
   State<StatefulWidget> createState() {
     return _HomeScreen();
   }
 }
+
 class _HomeScreen extends State<HomeScreen> {
   UserController _userController = UserController();
 
@@ -28,7 +30,7 @@ class _HomeScreen extends State<HomeScreen> {
     Navigator.of(context).pop();
   }
 
-  Future<void>_showAddUserDialog() async {
+  Future<void> _showAddUserDialog() async {
     String firstName = "";
     String lastName = "";
 
@@ -69,8 +71,7 @@ class _HomeScreen extends State<HomeScreen> {
               )
             ],
           );
-        }
-    );
+        });
   }
 
   Widget _buildUserList() {
@@ -78,8 +79,34 @@ class _HomeScreen extends State<HomeScreen> {
       itemCount: _userController.users.length,
       itemBuilder: (BuildContext context, int index) {
         User user = _userController.users[index];
-        return ListTile(
-          title: Text('${user.prenom} ${user.nom}'),
+        return Dismissible(
+          key: Key(user.lastName ?? UniqueKey().toString()),
+          direction: DismissDirection.startToEnd,
+          onDismissed: (direction) {
+            _userController.users.removeAt(index);
+            setState(() {});
+          },
+          background: Container(
+              color: Colors.red,
+              alignment: Alignment.centerRight,
+              padding: const EdgeInsets.only(right: 20),
+              child: const Icon(Icons.delete, color: Colors.white)),
+          child: Card(
+          child: ListTile(
+            leading: const Icon(Icons.person),
+            title: Text('${user.firstName ?? ''} ${user.lastName ?? ''}'),
+            onTap: () {
+              if (user != null) {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => UserDetailScreen(user: user),
+                    )
+                );
+              }
+            },
+          ),
+          ),
         );
       },
     );
@@ -89,7 +116,7 @@ class _HomeScreen extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Flutter', style: TextStyle(color: Colors.white)),
+        title: const Text('User List', style: TextStyle(color: Colors.white)),
         elevation: 10.0,
         centerTitle: true,
       ),
