@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../controller/message_controller.dart';
 import '../model/message.dart';
 import '../model/user.dart';
 
@@ -14,6 +15,8 @@ class CreateMessageScreen extends StatefulWidget {
 class _CreateMessageScreenState extends State<CreateMessageScreen> {
   late TextEditingController _subjectController;
   late TextEditingController _contentController;
+
+  MessageController _messageController = MessageController();
 
   @override
   void initState() {
@@ -31,6 +34,8 @@ class _CreateMessageScreenState extends State<CreateMessageScreen> {
         sendDate: DateTime.now(),
         author: widget.user,
       );
+
+      _messageController.addMessage(newMessage);
 
       Navigator.of(context).pop(newMessage);
     } else {
@@ -50,7 +55,7 @@ class _CreateMessageScreenState extends State<CreateMessageScreen> {
         centerTitle: true,
       ),
       body: Padding(
-        padding: EdgeInsets.all(20.0),
+        padding: const EdgeInsets.all(20.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
@@ -63,7 +68,7 @@ class _CreateMessageScreenState extends State<CreateMessageScreen> {
               controller: _subjectController,
               decoration: const InputDecoration(
                 labelText: 'Subject',
-                border: OutlineInputBorder(),
+                border: OutlineInputBorder()
               ),
             ),
             const SizedBox(height: 20),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:message_app/model/user.dart';
-
 import '../components/create_message.dart';
 import '../model/message.dart';
 import 'message_detail_screen.dart';
@@ -15,6 +14,7 @@ class UserDetailScreen extends StatefulWidget {
 }
 
 class _UserDetailScreenState extends State<UserDetailScreen> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,6 +23,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
         elevation: 10.0,
         centerTitle: true,
       ),
+      backgroundColor: Colors.amber,
       body: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
@@ -30,22 +31,11 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
             children: [
               Center(
                 child: Text(
-                  'First Name: ${widget.user.firstName}',
+                  '${widget.user.firstName} ${widget.user.lastName}',
                   style: const TextStyle(
-                    fontSize: 18,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.blue,
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
-              Center(
-                child: Text(
-                  'Last Name: ${widget.user.lastName}',
-                  style: const TextStyle(
-                    fontSize: 18,
+                    fontSize: 26,
                     fontStyle: FontStyle.italic,
-                    color: Colors.green,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
@@ -65,12 +55,13 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                     });
                   }
                 },
-                child: const Text('Create Message'),
+                child: const Text('Create Message',
+                    style: TextStyle(fontSize: 16)),
               ),
               const SizedBox(height: 20),
               const Text(
                 'Messages',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
               ),
               const SizedBox(height: 10),
               Expanded(
@@ -94,7 +85,6 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                               .endToStart, // Swipe from right to left to delete
                           onDismissed: (direction) {
                             setState(() {
-                              // Remove the message from the list
                               widget.user.messages.removeAt(index);
                             });
                           },
@@ -107,7 +97,8 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                           ),
                           child: ListTile(
                             leading: const Icon(Icons.message),
-                            title: Text(message.subject),
+                            title: Text(message.subject,
+                                style: const TextStyle(fontSize: 20)),
                             onTap: () {
                               Navigator.push(
                                 context,

@@ -1,7 +1,12 @@
 import '../model/message.dart';
 
 class MessageController {
-  List<Message> _messages = [];
+  static final MessageController _instance = MessageController._internal();
+  factory MessageController() => _instance;
+
+  MessageController._internal();
+
+  final List<Message> _messages = [];
   int _nextId = 1;
 
   void addMessage(Message message) {
@@ -21,6 +26,6 @@ class MessageController {
   }
 
   List<Message> getAllMessages() {
-    return List.from(_messages);
+    return List.of(_messages);
   }
 }

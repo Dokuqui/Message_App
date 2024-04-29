@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:message_app/screens/home_screen.dart';
+import 'package:message_app/screens/user_detail_screen.dart';
 
 void main() {
   runApp(const MainApp());
@@ -14,7 +15,7 @@ class MainApp extends StatelessWidget {
       title: 'Flutter',
       theme: ThemeData(
         appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.indigo,
+          backgroundColor: Colors.deepPurple,
         ),
       ),
       debugShowCheckedModeBanner: false,

@@ -20,23 +20,39 @@ class MessageDetailScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
+            const Text(
+              'Subject:\n',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
             Text(
-              'Subject:\n ${message.subject}',
+              message.subject,
               style: const TextStyle(fontSize: 18),
             ),
-            const SizedBox(height: 10),
+            const SizedBox(height: 20),
+            const Text(
+              'Content:\n',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
             Text(
-              'Content:\n ${message.content}',
+              message.content,
               style: const TextStyle(fontSize: 18),
             ),
-            const SizedBox(height: 10),
-            Text(
-              'Date:\n ${message.sendDate}',
-              style: TextStyle(fontSize: 18),
+            const SizedBox(height: 20),
+            const Text(
+              'Date:\n',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
-            const SizedBox(height: 10),
             Text(
-              'Author:\n ${message.author.firstName} ${message.author.lastName}',
+              '${message.sendDate}',
+              style: const TextStyle(fontSize: 18),
+            ),
+            const SizedBox(height: 20),
+            const Text(
+              'Author:\n',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            Text(
+              '${message.author.firstName} ${message.author.lastName}',
               style: const TextStyle(fontSize: 18),
             ),
           ],

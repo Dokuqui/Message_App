@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:message_app/screens/user_detail_screen.dart';
+import '../controller/message_controller.dart';
 import '../controller/user_controller.dart';
 import '../model/user.dart';
+import 'message_list_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -13,15 +15,8 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreen extends State<HomeScreen> {
-  UserController _userController = UserController();
-
-  /*
-  @override
-  void initState() {
-    super.initState();
-    _userController.loadUsers();
-  }
-   */
+  final UserController _userController = UserController();
+  final MessageController _messageController = MessageController();
 
   void _addUser(String firstName, String lastName) {
     User user = User(firstName, lastName);
@@ -38,7 +33,7 @@ class _HomeScreen extends State<HomeScreen> {
         context: context,
         builder: (BuildContext context) {
           return AlertDialog(
-            title: const Text('Ajouter un utilisateur'),
+            title: const Text('Add new User'),
             content: Column(
               mainAxisSize: MainAxisSize.min,
               children: [
@@ -61,13 +56,13 @@ class _HomeScreen extends State<HomeScreen> {
                 onPressed: () {
                   Navigator.of(context).pop();
                 },
-                child: const Text('Abort'),
+                child: const Text('Cancel'),
               ),
               ElevatedButton(
                 onPressed: () {
                   _addUser(firstName, lastName);
                 },
-                child: const Text('Ajouter'),
+                child: const Text('Add'),
               )
             ],
           );
@@ -119,8 +114,21 @@ class _HomeScreen extends State<HomeScreen> {
         title: const Text('User List', style: TextStyle(color: Colors.white)),
         elevation: 10.0,
         centerTitle: true,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.message_rounded, color: Colors.white),
+            onPressed: () async {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => MessageListScreen(messages: _messageController.getAllMessages()),
+                ),
+              );
+            },
+          )
+        ],
       ),
-      backgroundColor: const Color.fromRGBO(255, 255, 255, 1),
+      backgroundColor: Colors.amber,
       body: _buildUserList(),
       floatingActionButton: FloatingActionButton(
         onPressed: _showAddUserDialog,
