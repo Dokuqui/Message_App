@@ -11,12 +11,31 @@ Message App is a simple Flutter application for managing users and messages. It 
 - **User List Screen**: On the main screen you can see list of all users which exist.
 - **User Detail Screen**: Navigate to the user detail screen to view details about a specific user. This screen displays the user's full name and a list of messages associated with that user. Users can also delete messages from this screen.
 - **Add Message**: From the user detail screen, users can add new messages related to the selected user.
+- **Edit Message**: From the message detail screen, users can edit existing messages. Also date will be updated automaticly.
 - **Message Detail Screen**: View detailed information about a message, including the author, subject, content, and creation date.
 - **View All Messages**: Access the list of all messages from the main screen by clicking on the message icon in the app bar. This screen displays a list of all messages, and users can navigate to the message detail screen to view and delete individual messages.
 
 ## Screenshots
 
-*Add screenshots of your app's main screen, user detail screen, message list screen, and message detail screen here.*
+<p align="center" >
+    <img src="message_app/static/images/userList.png" alt="User List Screen" width="200" height="400" />
+</p>
+
+<p align="center" >
+    <img src="message_app/static/images/userDetail.png" alt="User Detail Screen" width="200" height="400" />
+</p>
+
+<p align="center" >
+    <img src="message_app/static/images/updated.png" alt="Updated" width="200" height="400" />
+</p>
+
+<p align="center" >
+    <img src="message_app/static/images/messageList.png" alt="Message List Screen" width="200" height="400" />
+</p>
+
+<p align="center" >
+    <img src="message_app/static/images/detailMessage.png" alt="Detail Message Screen" width="200" height="400" />
+</p>
 
 ## Installation
 
