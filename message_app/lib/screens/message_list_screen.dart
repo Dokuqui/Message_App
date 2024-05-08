@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:message_app/components/create_message.dart';
 import '../controller/message_controller.dart';
 import '../model/message.dart';
 import 'message_detail_screen.dart';
 
 class MessageListScreen extends StatelessWidget {
   final List<Message> messages;
+  final void Function(Message) onDeleteMessage;
 
-  const MessageListScreen({required this.messages});
+  const MessageListScreen(
+      {required this.messages, required this.onDeleteMessage});
 
   @override
   Widget build(BuildContext context) {
@@ -15,11 +16,11 @@ class MessageListScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Message List', style: TextStyle(color: Colors.white)),
+        title:
+            const Text('Message List', style: TextStyle(color: Colors.white)),
         elevation: 10.0,
         centerTitle: true,
       ),
-      backgroundColor: Colors.amber,
       body: messages.isEmpty
           ? const Center(
               child: Text('No messages', style: TextStyle(color: Colors.white)),
@@ -33,6 +34,7 @@ class MessageListScreen extends StatelessWidget {
                   direction: DismissDirection.endToStart,
                   onDismissed: (direction) {
                     _messageController.deleteMessage(message);
+                    onDeleteMessage(message);
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
                         content: Text('Message ${message.subject} dismissed'),

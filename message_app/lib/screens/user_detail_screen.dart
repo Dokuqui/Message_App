@@ -6,15 +6,15 @@ import 'message_detail_screen.dart';
 
 class UserDetailScreen extends StatefulWidget {
   final User user;
-
-  const UserDetailScreen({super.key, required this.user});
+  final List<Message> messages;
+  const UserDetailScreen(
+      {super.key, required this.user, required this.messages});
 
   @override
   _UserDetailScreenState createState() => _UserDetailScreenState();
 }
 
 class _UserDetailScreenState extends State<UserDetailScreen> {
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,7 +23,6 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
         elevation: 10.0,
         centerTitle: true,
       ),
-      backgroundColor: Colors.amber,
       body: Padding(
           padding: const EdgeInsets.all(20.0),
           child: Column(
@@ -51,7 +50,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                   );
                   if (newMessage != null && newMessage is Message) {
                     setState(() {
-                      widget.user.messages.add(newMessage);
+                      widget.messages.add(newMessage);
                     });
                   }
                 },
@@ -66,9 +65,9 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
               const SizedBox(height: 10),
               Expanded(
                 child: ListView.builder(
-                  itemCount: widget.user.messages.length,
+                  itemCount: widget.messages.length,
                   itemBuilder: (context, index) {
-                    Message message = widget.user.messages[index];
+                    Message message = widget.messages[index];
                     return Card(
                       elevation: 2.0,
                       margin: const EdgeInsets.symmetric(
@@ -79,10 +78,8 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(10.0),
                         child: Dismissible(
-                          key:
-                              UniqueKey(), // Use UniqueKey for each Dismissible widget
-                          direction: DismissDirection
-                              .endToStart, // Swipe from right to left to delete
+                          key: UniqueKey(),
+                          direction: DismissDirection.endToStart,
                           onDismissed: (direction) {
                             setState(() {
                               widget.user.messages.removeAt(index);

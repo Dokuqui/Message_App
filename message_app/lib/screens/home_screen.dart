@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:message_app/screens/user_detail_screen.dart';
 import '../controller/message_controller.dart';
 import '../controller/user_controller.dart';
+import '../model/message.dart';
 import '../model/user.dart';
 import 'message_list_screen.dart';
 
@@ -87,24 +88,30 @@ class _HomeScreen extends State<HomeScreen> {
               padding: const EdgeInsets.only(right: 20),
               child: const Icon(Icons.delete, color: Colors.white)),
           child: Card(
-          child: ListTile(
-            leading: const Icon(Icons.person),
-            title: Text('${user.firstName ?? ''} ${user.lastName ?? ''}'),
-            onTap: () {
-              if (user != null) {
-                Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) => UserDetailScreen(user: user),
-                    )
-                );
-              }
-            },
-          ),
+            child: ListTile(
+              leading: const Icon(Icons.person),
+              title: Text('${user.firstName ?? ''} ${user.lastName ?? ''}'),
+              onTap: () {
+                if (user != null) {
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => UserDetailScreen(
+                            user: user,
+                            messages: _messageController.getAllMessages()),
+                      ));
+                }
+              },
+            ),
           ),
         );
       },
     );
+  }
+
+  void _deleteMessage(Message message) {
+    _messageController.deleteMessage(message);
+    setState(() {});
   }
 
   @override
@@ -121,14 +128,16 @@ class _HomeScreen extends State<HomeScreen> {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => MessageListScreen(messages: _messageController.getAllMessages()),
+                  builder: (context) => MessageListScreen(
+                    messages: _messageController.getAllMessages(),
+                    onDeleteMessage: _deleteMessage,
+                  ),
                 ),
               );
             },
           )
         ],
       ),
-      backgroundColor: Colors.amber,
       body: _buildUserList(),
       floatingActionButton: FloatingActionButton(
         onPressed: _showAddUserDialog,
