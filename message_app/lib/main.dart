@@ -1,5 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:message_app/screens/home_screen.dart';
+import 'package:message_app/screens/login_screen.dart';
+import 'package:message_app/screens/user_detail_screen.dart';
+import 'package:message_app/screens/user_list_screen.dart';
+
+import 'model/message.dart';
+import 'model/user.dart';
+
 
 void main() {
   runApp(const MainApp());
@@ -20,8 +27,11 @@ class MainApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       initialRoute: '/',
       routes: {
-        '/': (context) => const HomeScreen(),
-      },
+        '/': (context) => HomeScreen(),
+        '/user-list': (context) => const UserListScreen(),
+        '/login': (context) => const LoginScreen(),
+//        '/user': (context) => const UserDetailScreen(user: user, messages: messages)
+        }
     );
   }
 }

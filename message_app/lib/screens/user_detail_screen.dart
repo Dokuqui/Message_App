@@ -1,20 +1,43 @@
 import 'package:flutter/material.dart';
-import 'package:message_app/model/user.dart';
+import 'package:http/http.dart' as http;
+import 'dart:convert';
+import '../model/user.dart';
 import '../components/create_message.dart';
 import '../model/message.dart';
 import 'message_detail_screen.dart';
 
 class UserDetailScreen extends StatefulWidget {
   final User user;
-  final List<Message> messages;
-  const UserDetailScreen(
-      {super.key, required this.user, required this.messages});
+  const UserDetailScreen({super.key, required this.user});
 
   @override
   _UserDetailScreenState createState() => _UserDetailScreenState();
 }
 
 class _UserDetailScreenState extends State<UserDetailScreen> {
+  List<Message> messages = [];
+
+  Future<void> fetchMessages() async {
+    final response = await http.get(
+      Uri.parse('https://s3-5193.nuage-peda.fr/messages?userId=${widget.user.id}'),
+    );
+    if (response.statusCode == 200) {
+      final jsonBody = json.decode(response.body);
+      final List<dynamic> messagesJson = jsonBody;
+      setState(() {
+        messages = messagesJson.map((messageJson) => Message.fromJson(messageJson)).toList();
+      });
+    } else {
+      throw Exception('Failed to load messages');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    fetchMessages();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -50,7 +73,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                   );
                   if (newMessage != null && newMessage is Message) {
                     setState(() {
-                      widget.messages.add(newMessage);
+                      messages.add(newMessage);
                     });
                   }
                 },
@@ -65,9 +88,9 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
               const SizedBox(height: 10),
               Expanded(
                 child: ListView.builder(
-                  itemCount: widget.messages.length,
+                  itemCount: messages.length,
                   itemBuilder: (context, index) {
-                    Message message = widget.messages[index];
+                    Message message = messages[index];
                     return Card(
                       elevation: 2.0,
                       margin: const EdgeInsets.symmetric(
@@ -82,7 +105,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                           direction: DismissDirection.endToStart,
                           onDismissed: (direction) {
                             setState(() {
-                              widget.user.messages.removeAt(index);
+                              messages.removeAt(index);
                             });
                           },
                           background: Container(
@@ -90,7 +113,7 @@ class _UserDetailScreenState extends State<UserDetailScreen> {
                             padding: const EdgeInsets.only(right: 20.0),
                             color: Colors.red,
                             child:
-                                const Icon(Icons.delete, color: Colors.white),
+                            const Icon(Icons.delete, color: Colors.white),
                           ),
                           child: ListTile(
                             leading: const Icon(Icons.message),
